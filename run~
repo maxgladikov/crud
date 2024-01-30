@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./gradlew clean && ./gradlew war
+cp /home/max/dev/java/aston_hw2/crud/build/libs/crud.war /home/max/dev/java/aston_hw2/webapps/
