@@ -43,6 +43,7 @@ public class MentorRepository implements CrudRepository<Mentor> {
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, contractNumber);
 			ResultSet rs = statement.executeQuery();
+			connection.commit();
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				Mentor.builder().contractNumber(contractNumber).firstName(rs.getString("first_name"))
@@ -68,6 +69,7 @@ public class MentorRepository implements CrudRepository<Mentor> {
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, contractNumber);
 			int row = statement.executeUpdate();
+			connection.commit();
 			log.info("? entity deleted",row);
 		} catch (SQLException e) {
 			log.error(e.getMessage());
@@ -80,6 +82,7 @@ public class MentorRepository implements CrudRepository<Mentor> {
 		List<Mentor> result = new LinkedList<>();
 		try (Statement statement = connection.createStatement()) {
 			ResultSet rs = statement.executeQuery(query);
+			connection.commit();
 			while (rs.next()) {
 				var mentor=Mentor.builder().contractNumber(rs.getString("contract_number")).firstName(rs.getString("first_name"))
 						.lastName(rs.getString("last_name")).salary(rs.getDouble("salary")).build();
