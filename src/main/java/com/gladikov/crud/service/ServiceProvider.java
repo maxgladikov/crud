@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ConnectionProvider {
+public class ServiceProvider {
 	private static Connection connection;
-	private static String url = "jdbc:postgresql://localhost:5432/university";
+	private static String url = "jdbc:postgresql://db:5432/university";
 	private static String username = "root";
 	private static String password = "secret";
 	
-	public  static Connection get() {
+	public  static Connection getConnection() {
 		if(connection == null) {
 			try { connection = DriverManager.getConnection(url, username, password);
 				connection.setAutoCommit(false);

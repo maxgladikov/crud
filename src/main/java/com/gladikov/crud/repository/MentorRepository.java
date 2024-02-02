@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.gladikov.crud.model.Mentor;
-import com.gladikov.crud.service.ConnectionProvider;
+import com.gladikov.crud.service.ServiceProvider;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MentorRepository implements CrudRepository<Mentor> {
-	private Connection connection = ConnectionProvider.get();
+	private Connection connection = ServiceProvider.getConnection();
 
 	@Override
 	public void create(Mentor entity) {
