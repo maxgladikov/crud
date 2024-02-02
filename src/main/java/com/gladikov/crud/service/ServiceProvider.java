@@ -16,7 +16,7 @@ public class ServiceProvider {
 	public  static Connection getConnection() {
 		if(connection == null) {
 			try { connection = DriverManager.getConnection(url, username, password);
-				connection.setAutoCommit(false);
+//				connection.setAutoCommit(false);
 			 } catch (SQLException e) {
 			    log.error(e.getMessage());
 			}
