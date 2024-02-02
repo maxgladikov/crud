@@ -1,9 +1,13 @@
 package com.gladikov.crud.service;
 
+import java.util.List;
+
 import com.gladikov.crud.model.Mentor;
+import com.gladikov.crud.repository.CrudRepository;
+import com.gladikov.crud.repository.MentorRepository;
 
 public class MentorService implements CrudService<Mentor>{
-
+	private CrudRepository<Mentor> repository=new MentorRepository();
 	@Override
 	public Mentor get(String contractNumber) {
 		// TODO Auto-generated method stub
@@ -26,6 +30,11 @@ public class MentorService implements CrudService<Mentor>{
 	public void delete(String contractNumber) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Mentor> get() {
+		return repository.read();
 	}
 
 }

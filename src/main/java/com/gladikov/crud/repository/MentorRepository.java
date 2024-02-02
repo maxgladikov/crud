@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import com.gladikov.crud.model.Mentor;
@@ -71,4 +74,33 @@ public class MentorRepository implements CrudRepository<Mentor> {
 		}
 	}
 
+	@Override
+	public List<Mentor> read() {
+		String query = "SELECT	first_name, last_name, salary, contract_number  FROM mentors";
+		List<Mentor> result = new LinkedList<>();
+		try (Statement statement = connection.createStatement()) {
+			ResultSet rs = statement.executeQuery(query);
+			while (rs.next()) {
+				var mentor=Mentor.builder().contractNumber(rs.getString("contract_number")).firstName(rs.getString("first_name"))
+						.lastName(rs.getString("last_name")).salary(rs.getDouble("salary")).build();
+				result.add(mentor);
+				log.info("Record read.");
+			}
+		} catch (SQLException e) {
+			log.error(e.getMessage());
+		}
+		return result;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
