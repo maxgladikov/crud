@@ -16,10 +16,16 @@ public class ServiceProvider {
 	public  static Connection getConnection() {
 //		if(connection == null) {
 		Connection connection=null;
-			try { connection = DriverManager.getConnection(url, username, password);
+		
+			try { 
+				Class.forName("org.postgresql.Driver");
+				connection = DriverManager.getConnection(url, username, password);
 //				connection.setAutoCommit(false);
 			 } catch (SQLException e) {
 			    log.error(e.getMessage());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 //		}
 		return connection ;
