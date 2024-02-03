@@ -18,6 +18,7 @@ public class AppContextListener implements ServletContextListener {
     	try {
     		ResourceProvider rp = new ResourceProvider();
 	    	DataSource ds = rp.getDatasource();
+	    	assert(ds != null);
 	    	try {
 	    		ctx.setAttribute("ResourceProvider", rp);
 		    	ctx.setAttribute("DataSource", ds);

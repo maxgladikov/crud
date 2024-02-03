@@ -30,6 +30,7 @@ public class MentorController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext ctx = request.getServletContext();
 		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
+		assert(ds != null);
 		service = new MentorService(ds);
 		ObjectMapper mapper = new ObjectMapper();
 		PrintWriter out = response.getWriter();
