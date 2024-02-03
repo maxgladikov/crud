@@ -22,16 +22,15 @@ public class AppContextListener implements ServletContextListener {
     	try {
 	    		rp = new ResourceProvider();
 		    	ds = rp.getDatasource();
+		    	ctx.setAttribute("ResourceProvider", rp);
+		    	ctx.setAttribute("DataSource", ds);
+		    	log.info("Datasource was initialized for Application.");
 		    	
 	    	} catch(Exception e) {
 	    		log.error(e.getMessage());
 	    		log.error(e.getCause().toString());
-	    		log.error(e.getStackTrace().toString());
-	    		Arrays.stream(e.getStackTrace()).forEachOrdered(Object::toString);
 	    	}
-    	ctx.setAttribute("ResourceProvider", rp);
-    	ctx.setAttribute("DataSource", ds);
-    	log.info("Datasource was initialized for Application.");
+    	
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
