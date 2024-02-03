@@ -15,12 +15,15 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
     	ServletContext ctx = servletContextEvent.getServletContext();
   
-    	
-    	ResourceProvider rp = new ResourceProvider();
-    	DataSource ds = rp.getDatasource();
-    	ctx.setAttribute("ResourceProvider", rp);
-    	ctx.setAttribute("DataSource", ds);
-    	log.info("Datasource was initialized for Application.");
+    	try {
+    		ResourceProvider rp = new ResourceProvider();
+	    	DataSource ds = rp.getDatasource();
+	    	ctx.setAttribute("ResourceProvider", rp);
+	    	ctx.setAttribute("DataSource", ds);
+	    	log.info("Datasource was initialized for Application.");
+    	} catch(Exception e) {
+    		log.error(e.getMessage());
+    	}
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
