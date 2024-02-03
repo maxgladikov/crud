@@ -2,7 +2,6 @@ package com.gladikov.crud.util;
 
 import javax.sql.DataSource;
 
-import org.postgresql.ds.PGPoolingDataSource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -40,18 +39,6 @@ public class ResourceProvider {
 		return ds;
 	}
 	
-	public DataSource getPGDatasource() {
-		PGPoolingDataSource source = new PGPoolingDataSource();
-		source.setDataSourceName("A Data Source");
-		source.setServerNames(new String[] {
-		    "localhost"
-		});
-		source.setDatabaseName("test");
-		source.setUser("testuser");
-		source.setPassword("testpassword");
-		source.setMaxConnections(10);
-		return source;
-	}
 	
 	
 	
