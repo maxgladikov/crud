@@ -25,13 +25,13 @@ public class ResourceProvider {
 	}
 	
 	public DataSource getDatasource() {
+		DataSource ds = null;
 		try {
-		HikariConfig config = new HikariConfig();
-		config.setUsername(profile.getUsername());
-		config.setPassword(profile.getPassword());
-		config.setJdbcUrl(profile.getUrl());
-		DataSource ds = new HikariDataSource(config);
-		
+			HikariConfig config = new HikariConfig();
+			config.setUsername(profile.getUsername());
+			config.setPassword(profile.getPassword());
+			config.setJdbcUrl(profile.getUrl());
+			ds = new HikariDataSource(config);
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
 			log.error(e.getMessage());
