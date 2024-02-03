@@ -14,12 +14,12 @@ public class ResourceProvider {
 	
 	public ResourceProvider() {
 		profile=reader.read("prod")
-				.orElseThrow(() ->new RuntimeException("Requested profile is not availible"));
+				.orElseThrow(() -> new RuntimeException("Requested profile is not availible").);
 	}
 	
 	public ResourceProvider(String profileName) {
 		profile=reader.read(profileName)
-				.orElseThrow(() ->new RuntimeException("Requested profile is not availible"));
+				.orElseThrow(() -> new RuntimeException("Requested profile is not availible"));
 	}
 	
 	public DataSource getDatasource() {
@@ -28,6 +28,12 @@ public class ResourceProvider {
 		config.setPassword(profile.getPassword());
 		config.setJdbcUrl(profile.getUrl());
 		DataSource ds = new HikariDataSource(config);
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			log.error(e.getMessage());
+		}
+		log.info("DataSource with url {} was successfully created", profile.getUrl());
 		return ds;
 	}
 	
