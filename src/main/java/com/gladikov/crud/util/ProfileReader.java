@@ -16,12 +16,20 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Slf4j
 public class ProfileReader implements Serializable {
+<<<<<<< HEAD
 
+=======
+	private static String path = "src/main/webapp/application.yml";
+>>>>>>> 428a758 (repo tests)
 	public static  Optional<Profile> read(String profileName){
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		Profiles profiles = null;
 			try {
+<<<<<<< HEAD
 				profiles=  mapper.readValue(new File("src/main/resources/application.yml"), Profiles.class);
+=======
+				profiles=  mapper.readValue(new File(path), Profiles.class);
+>>>>>>> 428a758 (repo tests)
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}
