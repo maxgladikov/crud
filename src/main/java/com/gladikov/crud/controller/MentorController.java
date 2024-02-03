@@ -22,7 +22,7 @@ public class MentorController extends HttpServlet {
 	CrudService<Mentor> service;
 
 	public MentorController() {
-		ServletContext ctx = getServletConfig().getServletContext();
+		ServletContext ctx = getServletContext();
 		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
 		service = new MentorService(ds);
 	}
