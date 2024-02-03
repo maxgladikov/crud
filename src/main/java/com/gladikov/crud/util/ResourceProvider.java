@@ -14,7 +14,7 @@ public class ResourceProvider {
 	
 	public ResourceProvider() {
 		profile=reader.read("prod")
-				.orElseThrow(() -> new RuntimeException("Requested profile is not availible").);
+				.orElseThrow(() -> new RuntimeException("Requested profile is not availible"));
 	}
 	
 	public ResourceProvider(String profileName) {
