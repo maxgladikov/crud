@@ -1,5 +1,7 @@
 package com.gladikov.crud.util;
 
+import java.util.Arrays;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -25,6 +27,7 @@ public class AppContextListener implements ServletContextListener {
 	    		log.error(e.getMessage());
 	    		log.error(e.getCause().toString());
 	    		log.error(e.getStackTrace().toString());
+	    		Arrays.stream(e.getStackTrace()).forEachOrdered(Object::toString);
 	    	}
     	ctx.setAttribute("ResourceProvider", rp);
     	ctx.setAttribute("DataSource", ds);
