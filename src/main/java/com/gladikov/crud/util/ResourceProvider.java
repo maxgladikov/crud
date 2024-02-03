@@ -25,7 +25,7 @@ public class ResourceProvider {
 	}
 	
 	public DataSource getDatasource() {
-		DataSource ds = null;
+		DataSource ds = null ;
 		try {
 			HikariConfig config = new HikariConfig();
 			config.setUsername(profile.getUsername());
