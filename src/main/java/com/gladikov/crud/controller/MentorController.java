@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.service.CrudService;
 import com.gladikov.crud.service.MentorService;
+import com.gladikov.crud.util.ResourceProvider;
 
 @WebServlet("/mentor")
 public class MentorController extends HttpServlet {
@@ -29,7 +30,7 @@ public class MentorController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext ctx = getServletContext();
 		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
-		service = new MentorService(ds);
+		service = new MentorService(new ResourceProvider().getDatasource());
 		ObjectMapper mapper = new ObjectMapper();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
