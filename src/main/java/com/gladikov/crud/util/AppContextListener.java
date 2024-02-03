@@ -15,25 +15,18 @@ public class AppContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
     	ServletContext ctx = servletContextEvent.getServletContext();
-  
+    	ResourceProvider rp = null;
+    	DataSource ds = null;
     	try {
-    		ResourceProvider rp = new ResourceProvider();
-	    	DataSource ds = rp.getDatasource();
-	    	if (ds == null)
-	    		throw new RuntimeException("ds is null");
-	    	
-	    	try {
-	    		ctx.setAttribute("ResourceProvider", rp);
-	    		ctx.setAttribute("DataSource", ds);
-	    		 
-	    	} catch(Exception e){
-	    		log.error("Setters");
+	    		rp = new ResourceProvider();
+		    	ds = rp.getDatasource();
+		    	
+	    	} catch(Exception e) {
+	    		log.error(e.getCause().toString());
 	    	}
-	    	log.info("Datasource was initialized for Application.");
-    	} catch(Exception e) {
-    		log.error(e.getMessage());
-    	}
-    	throw new RuntimeException("excecuted");
+    	ctx.setAttribute("ResourceProvider", rp);
+    	ctx.setAttribute("DataSource", ds);
+    	log.info("Datasource was initialized for Application.");
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
