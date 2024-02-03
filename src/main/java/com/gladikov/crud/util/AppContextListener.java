@@ -8,8 +8,9 @@ import javax.sql.DataSource;
 
 import lombok.extern.slf4j.Slf4j;
 
-@WebListener
+
 @Slf4j
+@WebListener
 public class AppContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -20,9 +21,11 @@ public class AppContextListener implements ServletContextListener {
 	    	DataSource ds = rp.getDatasource();
 	    	if (ds == null)
 	    		throw new RuntimeException("ds is null");
+	    	throw new RuntimeException("excecuted");
 	    	try {
 	    		ctx.setAttribute("ResourceProvider", rp);
-		    	ctx.setAttribute("DataSource", ds);
+	    		ctx.setAttribute("DataSource", ds);
+	    		 getServletContext().setAttribute("DataSource", ds);
 	    	} catch(Exception e){
 	    		log.error("Setters");
 	    	}
