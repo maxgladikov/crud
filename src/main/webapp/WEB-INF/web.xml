@@ -12,6 +12,9 @@
     	<welcome-file>index.html</welcome-file>
   	</welcome-file-list>
   	
+  	<listener>
+		<listener-class>com.gladikov.crud.util.AppContextListener</listener-class>
+	</listener>	
   
 
 </web-app>
