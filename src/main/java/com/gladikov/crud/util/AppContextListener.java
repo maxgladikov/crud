@@ -21,11 +21,11 @@ public class AppContextListener implements ServletContextListener {
 	    	DataSource ds = rp.getDatasource();
 	    	if (ds == null)
 	    		throw new RuntimeException("ds is null");
-	    	throw new RuntimeException("excecuted");
+	    	
 	    	try {
 	    		ctx.setAttribute("ResourceProvider", rp);
 	    		ctx.setAttribute("DataSource", ds);
-	    		 getServletContext().setAttribute("DataSource", ds);
+	    		 
 	    	} catch(Exception e){
 	    		log.error("Setters");
 	    	}
@@ -33,6 +33,7 @@ public class AppContextListener implements ServletContextListener {
     	} catch(Exception e) {
     		log.error(e.getMessage());
     	}
+    	throw new RuntimeException("excecuted");
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
