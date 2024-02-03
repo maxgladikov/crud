@@ -22,7 +22,9 @@ public class AppContextListener implements ServletContextListener {
 		    	ds = rp.getDatasource();
 		    	
 	    	} catch(Exception e) {
+	    		log.error(e.getMessage());
 	    		log.error(e.getCause().toString());
+	    		log.error(e.getStackTrace().toString());
 	    	}
     	ctx.setAttribute("ResourceProvider", rp);
     	ctx.setAttribute("DataSource", ds);
