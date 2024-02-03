@@ -2,6 +2,8 @@ package com.gladikov.crud.util;
 
 import javax.sql.DataSource;
 
+import org.postgresql.ds.PGPoolingDataSource;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -23,18 +25,32 @@ public class ResourceProvider {
 	}
 	
 	public DataSource getDatasource() {
+		try {
 		HikariConfig config = new HikariConfig();
 		config.setUsername(profile.getUsername());
 		config.setPassword(profile.getPassword());
 		config.setJdbcUrl(profile.getUrl());
 		DataSource ds = new HikariDataSource(config);
-		try {
+		
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
 			log.error(e.getMessage());
 		}
 		log.info("DataSource with url {} was successfully created", profile.getUrl());
 		return ds;
+	}
+	
+	public DataSource getPGDatasource() {
+		PGPoolingDataSource source = new PGPoolingDataSource();
+		source.setDataSourceName("A Data Source");
+		source.setServerNames(new String[] {
+		    "localhost"
+		});
+		source.setDatabaseName("test");
+		source.setUser("testuser");
+		source.setPassword("testpassword");
+		source.setMaxConnections(10);
+		return source;
 	}
 	
 	
