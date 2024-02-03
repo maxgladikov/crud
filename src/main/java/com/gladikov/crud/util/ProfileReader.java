@@ -1,8 +1,7 @@
 package com.gladikov.crud.util;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.InputStream;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,15 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-public class ProfileReader implements Serializable {
+public class ProfileReader{
 	
 	private static String path = "src/main/webapp/application.yml";
 	
-	public static  Optional<Profile> read(String profileName){
+	public  Optional<Profile> read(String profileName){
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		Profiles profiles = null;
+		InputStream inputStream;
 			try {
-				profiles=  mapper.readValue(new File(path), Profiles.class);
+				inputStream = this.getClass().getClassLoader().getResourceAsStream("application.yml");
+
+				profiles=  mapper.readValue(inputStream, Profiles.class);
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}

@@ -10,14 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ResourceProvider {
 	private final Profile profile;
+	private final ProfileReader reader=new ProfileReader();
 	
 	public ResourceProvider() {
-		profile=ProfileReader.read("prod")
+		profile=reader.read("prod")
 				.orElseThrow(() ->new RuntimeException("Requested profile is not availible"));
 	}
 	
 	public ResourceProvider(String profileName) {
-		profile=ProfileReader.read(profileName)
+		profile=reader.read(profileName)
 				.orElseThrow(() ->new RuntimeException("Requested profile is not availible"));
 	}
 	
