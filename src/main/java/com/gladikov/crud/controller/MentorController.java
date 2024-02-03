@@ -22,14 +22,14 @@ public class MentorController extends HttpServlet {
 	CrudService<Mentor> service;
 
 	public MentorController() {
-		ServletContext ctx = getServletContext();
-		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
-		service = new MentorService(ds);
+		
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext ctx = getServletContext();
+		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
+		service = new MentorService(ds);
 		ObjectMapper mapper = new ObjectMapper();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
