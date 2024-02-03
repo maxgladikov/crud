@@ -28,9 +28,9 @@ public class MentorController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext ctx = getServletContext();
+		ServletContext ctx = request.getServletContext();
 		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
-		service = new MentorService(new ResourceProvider().getDatasource());
+		service = new MentorService(ds);
 		ObjectMapper mapper = new ObjectMapper();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
