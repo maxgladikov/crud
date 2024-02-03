@@ -25,7 +25,7 @@ public class ProfileReader{
 			try {
 				inputStream = this.getClass().getClassLoader().getResourceAsStream("application.yml");
 				profiles=  mapper.readValue(inputStream, Profiles.class);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
 			return Optional.ofNullable(profiles.getProfiles().get(profileName));
