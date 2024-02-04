@@ -28,7 +28,7 @@ abstract class CrudServiceTest<T extends DTO> {
 		// given
 		T expected=givenDto();
 		// when
-		T result=service.get(expected);
+		T result=service.get(expected.contractNumber());
 		// then
 		assertEquals(expected,result);
 	}

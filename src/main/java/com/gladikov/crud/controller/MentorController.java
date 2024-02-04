@@ -16,8 +16,9 @@ import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.service.CrudService;
 import com.gladikov.crud.service.MentorService;
 import com.gladikov.crud.service.dto.MentorDto;
+import com.gladikov.crud.util.ServletUtil;
 
-@WebServlet("/mentor")
+@WebServlet("/mentor/*")
 public class MentorController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -33,17 +34,45 @@ public class MentorController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		out.print(mapper.writeValueAsString(service.get()));
-		out.flush();
+		if(request.getPathInfo().equals("/")){
+			var params = request.getParameterMap();
+			if (params.isEmpty()) {
+				ObjectMapper mapper = new ObjectMapper();
+				PrintWriter out = response.getWriter();
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				out.print(mapper.writeValueAsString(service.get()));
+				out.flush();
+			} else if (params.size() == 1 && params.containsKey("contract")){
+				PrintWriter out = response.getWriter();
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				var contract = params.get("contract");
+				out.print(service.get(contract[0]));
+				out.flush();
+			} else 
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST); 
+		}
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getPathInfo().equals("/")) {
+			MentorDto mentor=ServletUtil.convertJsonToObject(request, MentorDto.class);
+			service.save(mentor);
+			response.setContentType("text/json");
+			response.setStatus(201);
+		} else 
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 }

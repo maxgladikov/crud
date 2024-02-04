@@ -22,8 +22,8 @@ public class MentorService implements CrudService<MentorDto>{
 	}
 	
 	@Override
-	public MentorDto get(MentorDto dto) {
-		Mentor mentor= repository.getByContractNumber(dto.contractNumber())
+	public MentorDto get(String contractNumber) {
+		Mentor mentor= repository.getByContractNumber(contractNumber)
 									.orElseThrow(NoSuchElementException::new);
 		return Mapper.convertMentorToDto(mentor);
 	}

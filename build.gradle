@@ -3,12 +3,6 @@ plugins {
         id 'eclipse'
 }	
 
-//war {
-    //webAppDirectory = file('src/main/resources')
-    //from 'src/main/resources' // adds a file-set to the root of the archive
-    //webInf { from 'src/additionalWebInf' } // adds a file-set to the WEB-INF dir.
-    //webXml = file('src/main/recources/WEB-INF/web.xml')
-//}
 
 ext { 
     lombokVersion = "1.18.28"
@@ -26,7 +20,6 @@ repositories {
 }
 
 dependencies{
-	implementation 'com.wordnik:swagger-jaxrs:1.5.3-M1'
 	testImplementation 'com.h2database:h2:2.2.224'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1'
 	implementation 'com.zaxxer:HikariCP:5.1.0'
