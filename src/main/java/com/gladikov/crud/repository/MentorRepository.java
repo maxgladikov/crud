@@ -83,8 +83,9 @@ public class MentorRepository implements CrudRepository<Mentor> {
 			) {		statement.setString(1, entity.getFirstName());
 					statement.setString(2, entity.getLastName());
 					statement.setDouble(3, entity.getSalary());
+					statement.setString(4, entity.getContractNumber());
 					int row = statement.executeUpdate();
-					log.info("? entity updated",row);
+					log.info("{} entity updated",row);
 				} catch (SQLException e) {
 					log.error(e.getMessage());
 				}
@@ -96,7 +97,7 @@ public class MentorRepository implements CrudRepository<Mentor> {
 		try (
 				Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(query)
-			) {
+			){
 			statement.setString(1, entiry.getContractNumber());
 			int row = statement.executeUpdate();
 			log.info("Entity with contract #{} was deleted", entiry.getContractNumber());

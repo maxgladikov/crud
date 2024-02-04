@@ -7,18 +7,23 @@ class MentorRepositoryTest extends CrudRepositoryTest<Mentor>{
 
 
 	@Override
-	Mentor getEntity() {
+	Mentor getFirstEntity() {
 		return Mentor.builder()
-						.firstName("TestName")
-						.lastName("TestSurname")
-						.salary(500.0)
-						.contractNumber("C-1")
-						.build();
+				.firstName("TestNameOne")
+				.lastName("TestSurnameOne")
+				.salary(500.0)
+				.contractNumber("C-1")
+				.build();
 	}
-
+	
 	@Override
-	int getNumberOfEntities() {
-		return 1;
+	Mentor getSecondEntity() {
+		return Mentor.builder()
+						.firstName("TestNameTwo")
+						.lastName("TestSurnameTwo")
+						.salary(700.0)
+						.contractNumber("C-2")
+						.build();
 	}
 
 	@Override

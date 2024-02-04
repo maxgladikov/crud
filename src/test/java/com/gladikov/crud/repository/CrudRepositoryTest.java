@@ -13,44 +13,75 @@ import com.gladikov.crud.model.Entity;
 
 abstract class CrudRepositoryTest<T extends Entity> {
 	private final CrudRepository<T> repository=getRepository();
-	private final T testEntity = getEntity();
+	private final T testEntityOne = getFirstEntity();
+	private final T testEntityTwo = getSecondEntity();
+	
+	@BeforeEach
+	void setUp(){
+		
+	}
 	
 	@Test
 	void givenEntity_whenProceedAdd_thenVerify() {
 		// given
-		String contractNum=testEntity.getContractNumber();
+		String contractNum=testEntityOne.getContractNumber();
 		// when
-		repository.add(testEntity);
+		repository.add(testEntityOne);
 		Optional<T> opt=repository.getByContractNumber(contractNum);
 		T result=opt.get();
 		// then
-		assertEquals(testEntity,result);
+		assertEquals(testEntityOne,result);
 	}
 	
 	@Test
 	void givenRepository_whenProceedGetAll_thenVerify() {
 		// given
-		repository.add(testEntity);
+		repository.add(testEntityOne);
+		repository.add(testEntityTwo);
+		int expected=2;
 		// when
-		int expected=1;
 		List<T> result=repository.getAll();
 		// then
-		assertEquals(expected,result.size());
+		assertAll(
+					() -> assertEquals(expected,result.size()),
+					() -> assertTrue(result.containsAll(List.of(testEntityOne,testEntityTwo)))
+				);
+	}
+	
+	@Test
+	void givenRepository_whenProceedDelete_thenVerify() {
+		// given
+		repository.add(testEntityOne);
+		repository.add(testEntityTwo);
+		// when
+		repository.delete(testEntityOne);
+		// then
+		assertFalse(repository.getAll().contains(testEntityOne));
+	}
+	
+	@Test
+	void givenRepository_whenProceedUpdate_thenVerify() {
+		// given
+		repository.add(testEntityOne);
+		repository.add(testEntityTwo);
+		testEntityOne.setFirstName("Changed");
+		// when
+		repository.update(testEntityOne);
+		// then
+		assertEquals(testEntityOne ,repository.getByContractNumber(testEntityOne.getContractNumber()).get());
 	}
 	
 	@AfterEach
 	void tearDown(){
-		repository.delete(testEntity);
-	}
-	@BeforeEach
-	void setUp(){
-		repository.delete(testEntity);
+		repository.delete(testEntityOne);
+		repository.delete(testEntityTwo);
 	}
 	
 	
 	
-	abstract T getEntity();
-	abstract int getNumberOfEntities();
+	
+	abstract T getFirstEntity();
+	abstract T getSecondEntity();
 	abstract CrudRepository<T> getRepository();
 		
 }

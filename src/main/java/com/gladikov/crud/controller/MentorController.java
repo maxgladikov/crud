@@ -15,12 +15,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.service.CrudService;
 import com.gladikov.crud.service.MentorService;
+import com.gladikov.crud.service.dto.MentorDto;
 
 @WebServlet("/mentor")
 public class MentorController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private CrudService<Mentor> service;
+	private CrudService<MentorDto> service;
 	private DataSource ds;
 
 	@Override
