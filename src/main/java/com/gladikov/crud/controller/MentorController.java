@@ -15,24 +15,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.service.CrudService;
 import com.gladikov.crud.service.MentorService;
-import com.gladikov.crud.util.ResourceProvider;
 
 @WebServlet("/mentor")
 public class MentorController extends HttpServlet {
 
-	CrudService<Mentor> service;
+	private static final long serialVersionUID = 1L;
+	private CrudService<Mentor> service;
 
 	public MentorController() {
-		
+		ServletContext ctx = getServletContext();
+		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
+		service = new MentorService(ds);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext ctx = request.getServletContext();
-		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
-		if (ds == null)
-    		throw new RuntimeException("ds is null");
-		service = new MentorService(ds);
 		ObjectMapper mapper = new ObjectMapper();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");

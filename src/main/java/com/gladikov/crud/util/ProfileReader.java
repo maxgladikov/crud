@@ -1,6 +1,5 @@
 package com.gladikov.crud.util;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
@@ -16,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProfileReader{
 	
-	private static String path = "src/main/webapp/application.yml";
+	private static String path = "application.yml";
 	
 	public  Optional<Profile> read(String profileName){
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		Profiles profiles = null;
 		InputStream inputStream;
 			try {
-				inputStream = this.getClass().getClassLoader().getResourceAsStream("application.yml");
+				inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
 				profiles=  mapper.readValue(inputStream, Profiles.class);
 			} catch (Exception e) {
 				log.error(e.getMessage());

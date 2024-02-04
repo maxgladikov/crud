@@ -1,7 +1,5 @@
 package com.gladikov.crud.util;
 
-import java.util.Arrays;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -15,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
+    @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
     	ServletContext ctx = servletContextEvent.getServletContext();
     	ResourceProvider rp = null;
@@ -33,6 +32,7 @@ public class AppContextListener implements ServletContextListener {
     	
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
     	log.info("Application shut down.");
     }

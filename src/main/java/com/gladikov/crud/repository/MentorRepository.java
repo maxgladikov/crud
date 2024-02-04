@@ -12,7 +12,6 @@ import java.util.Optional;
 import javax.sql.DataSource;
 
 import com.gladikov.crud.model.Mentor;
-import com.gladikov.crud.util.ResourceProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

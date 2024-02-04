@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class Profile implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@JsonProperty("url")
 	private  String url;
 	@JsonProperty("username")
