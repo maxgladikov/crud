@@ -21,10 +21,12 @@ public class MentorController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private CrudService<Mentor> service;
+	private DataSource ds;
 
-	public MentorController() {
+	@Override
+	public void init() throws ServletException {
 		ServletContext ctx = getServletContext();
-		DataSource ds = (DataSource) ctx.getAttribute("DataSource");
+		ds = (DataSource) ctx.getAttribute("DataSource");
 		service = new MentorService(ds);
 	}
 
