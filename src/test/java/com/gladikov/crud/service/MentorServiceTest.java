@@ -4,7 +4,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collections;
 import java.util.Optional;
 
@@ -41,11 +41,6 @@ class MentorServiceTest extends CrudServiceTest<MentorDto>{
 		verify(repo,times(expectedRepoUpdateCalls)).update(givenEntity());
 	}
 	
-	@Test
-	void test() {
-	assertTrue(false);
-	}
-
 	@Override
 	MentorDto givenDto() {
 		return new MentorDto("TestName", "TestSurname", 500.0, "C-1");
