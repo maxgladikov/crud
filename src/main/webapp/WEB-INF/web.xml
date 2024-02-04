@@ -11,4 +11,16 @@
     <welcome-file-list>
     	<welcome-file>index.html</welcome-file>
   	</welcome-file-list>
+  	
+  	<servlet> 
+  		<servlet-name>Swagger</servlet-name> 
+	  		<servlet-class>com.wordnik.swagger.jersey.config.JerseyJaxrsConfig</servlet-class> 
+	  		<load-on-startup>1</load-on-startup>
+  	 </servlet>
+	  
+	  <servlet-mapping>
+  		 <servlet-name>Swagger</servlet-name> 
+  		 <url-pattern>/api/*</url-pattern> <!-- You can choose any URL pattern you prefer --> 
+  	  </servlet-mapping>
+  	
 </web-app>
