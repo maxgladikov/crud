@@ -26,6 +26,7 @@ repositories {
 }
 
 dependencies{
+	implementation 'io.swagger:swagger-servlet:1.6.13'
 	testImplementation 'com.h2database:h2:2.2.224'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1'
 	implementation 'com.zaxxer:HikariCP:5.1.0'
