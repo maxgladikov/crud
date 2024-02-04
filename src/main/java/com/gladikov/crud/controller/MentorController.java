@@ -48,7 +48,7 @@ public class MentorController extends HttpServlet {
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				var contract = params.get("contract");
-				out.print(service.get(contract[0]));
+				out.print(service.get(contract[0]).json());
 				out.flush();
 			} else 
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST); 
