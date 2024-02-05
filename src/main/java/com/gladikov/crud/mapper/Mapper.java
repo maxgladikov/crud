@@ -1,7 +1,7 @@
-package com.gladikov.crud.util;
+package com.gladikov.crud.mapper;
 
+import com.gladikov.crud.dto.MentorDto;
 import com.gladikov.crud.model.Mentor;
-import com.gladikov.crud.service.dto.MentorDto;
 
 public class Mapper {
 

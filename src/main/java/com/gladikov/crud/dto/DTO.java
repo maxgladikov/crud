@@ -1,6 +1,6 @@
-package com.gladikov.crud.service.dto;
+package com.gladikov.crud.dto;
 
-import com.gladikov.crud.util.JsonMapper;
+import com.gladikov.crud.mapper.JsonMapper;
 
 public interface DTO {
 	String contractNumber();

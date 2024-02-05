@@ -1,4 +1,4 @@
-package com.gladikov.crud.util;
+package com.gladikov.crud.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

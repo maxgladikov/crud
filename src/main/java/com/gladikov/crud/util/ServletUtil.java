@@ -8,10 +8,18 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class ServletUtil {
-	
-	public static <T> T convertJsonToObject(HttpServletRequest request, Class<T> clazz) throws StreamReadException, DatabindException, IOException {
+	private ServletUtil() {}
+	public static <T> T convertJsonToObject(HttpServletRequest request, Class<T> clazz) {
+		T result=null;
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.readValue(request.getReader(), clazz);
+		try {
+			result = mapper.readValue(request.getReader(), clazz);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
+		return result;
 	}
 }

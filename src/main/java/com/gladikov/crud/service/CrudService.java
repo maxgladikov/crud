@@ -2,7 +2,7 @@ package com.gladikov.crud.service;
 
 import java.util.List;
 
-public interface CrudService<E extends com.gladikov.crud.service.dto.DTO> {
+public interface CrudService<E extends com.gladikov.crud.dto.DTO> {
 	E get(String contractNumber);
 	List<E> get();
 	void save(E dto);

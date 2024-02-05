@@ -1,4 +1,4 @@
-package com.gladikov.crud.util;
+package com.gladikov.crud.util.profile;
 
 import java.io.Serializable;
 

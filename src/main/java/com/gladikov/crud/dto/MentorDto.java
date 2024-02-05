@@ -1,4 +1,4 @@
-package com.gladikov.crud.service.dto;
+package com.gladikov.crud.dto;
 
 
 public record MentorDto(String firstName, String lastName, double salary, String contractNumber) implements DTO {

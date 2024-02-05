@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gladikov.crud.dto.MentorDto;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.service.CrudService;
 import com.gladikov.crud.service.MentorService;
-import com.gladikov.crud.service.dto.MentorDto;
 import com.gladikov.crud.util.ServletUtil;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @WebServlet("/mentor/*")
 public class MentorController extends HttpServlet {
 
@@ -51,14 +53,19 @@ public class MentorController extends HttpServlet {
 				out.print(service.get(contract[0]).json());
 				out.flush();
 			} else 
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST); 
+				response.sendError(HttpServletResponse.SC_NOT_FOUND); 
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getPathInfo().equals("/")) {
-			MentorDto mentor=ServletUtil.convertJsonToObject(request, MentorDto.class);
+			MentorDto mentor=null;
+			try {
+				mentor=ServletUtil.convertJsonToObject(request, MentorDto.class);
+			}catch(Exception e) {
+				log.error(e.getMessage());
+			}
 			service.save(mentor);
 			response.setContentType("text/json");
 			response.setStatus(201);

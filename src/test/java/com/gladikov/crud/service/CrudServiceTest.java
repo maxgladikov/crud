@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.gladikov.crud.service.dto.DTO;
+import com.gladikov.crud.dto.DTO;
 
 abstract class CrudServiceTest<T extends DTO> {
 	protected CrudService<T> service=getService();

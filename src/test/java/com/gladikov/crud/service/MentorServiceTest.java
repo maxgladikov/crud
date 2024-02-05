@@ -11,9 +11,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.gladikov.crud.dto.MentorDto;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.repository.MentorRepository;
-import com.gladikov.crud.service.dto.MentorDto;
 
 class MentorServiceTest extends CrudServiceTest<MentorDto>{
 		private MentorRepository repo;

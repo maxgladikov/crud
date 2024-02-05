@@ -5,11 +5,11 @@ import java.util.NoSuchElementException;
 
 import javax.sql.DataSource;
 
+import com.gladikov.crud.dto.MentorDto;
+import com.gladikov.crud.mapper.Mapper;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.repository.CrudRepository;
 import com.gladikov.crud.repository.MentorRepository;
-import com.gladikov.crud.service.dto.MentorDto;
-import com.gladikov.crud.util.Mapper;
 public class MentorService implements CrudService<MentorDto>{
 	private final CrudRepository<Mentor> repository;
 	
