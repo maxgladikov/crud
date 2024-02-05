@@ -20,6 +20,7 @@ public class ServletUtil {
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
+		log.debug(result.toString());
 		return result;
 	}
 }
