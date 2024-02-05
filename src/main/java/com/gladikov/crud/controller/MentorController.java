@@ -1,5 +1,6 @@
 package com.gladikov.crud.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.stream.Collectors;
@@ -63,7 +64,7 @@ public class MentorController extends HttpServlet {
 		if (request.getPathInfo().equals("/")) {
 			MentorDto mentor=null;
 			try {
-				var msg=request.getReader().lines().collect(Collectors.joining());
+				var msg=request.getReader().lines().collect(Collectors.joining(","));
 				log.info(msg);
 				mentor=ServletUtil.convertJsonToObject(request, MentorDto.class);
 			}catch(Exception e) {
