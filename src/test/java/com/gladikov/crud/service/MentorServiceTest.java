@@ -1,52 +1,27 @@
 package com.gladikov.crud.service;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.gladikov.crud.dto.MentorDto;
+import com.gladikov.crud.exception.DaoException;
+import com.gladikov.crud.mapper.Mapper;
 import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.repository.MentorRepository;
 
-class MentorServiceTest extends CrudServiceTest<MentorDto>{
-		private MentorRepository repo;
-	
-	@Test
-	void givenService_whenProceedSave_thenVerify() {
-		// given
-		doNothing().when(repo).add(givenEntity());
+class MentorServiceTest extends CrudServiceTest<MentorDto, Mentor>{
 		
-		int expectedRepoAddCalls=1;
-		//when
-		service.save(givenDto());
-		//then
-		verify(repo,times(expectedRepoAddCalls)).add(givenEntity());
-	}
-	
-	@Test
-	void givenService_whenProceedUpdate_thenVerify() {
-		// given
-		doNothing().when(repo).update(givenEntity());
-		int expectedRepoUpdateCalls=1;
-		//when
-		service.update(givenDto());
-		//then
-		verify(repo,times(expectedRepoUpdateCalls)).update(givenEntity());
+	@Override
+	MentorDto givenDto() {
+		return Mapper.convertMentorToDto(givenEntity());
 	}
 	
 	@Override
-	MentorDto givenDto() {
-		return new MentorDto("TestName", "TestSurname", 500.0, "C-1");
-	}
-	
-	private Mentor givenEntity() {
+	Mentor givenEntity() {
 		return Mentor.builder()
 						.firstName("TestName")
 						.lastName("TestSurname")
@@ -56,11 +31,11 @@ class MentorServiceTest extends CrudServiceTest<MentorDto>{
 	}
 
 	@Override
-	CrudService<MentorDto> getService() {
+	CrudService<MentorDto> getService() throws DaoException {
 		repo=Mockito.mock(MentorRepository.class);
 		when(repo.getAll()).thenReturn(Collections.singletonList(givenEntity()));
 		when(repo.getByContractNumber(givenEntity().getContractNumber())).thenReturn(Optional.ofNullable(givenEntity()));
-		return new MentorService(repo);
+		return new MentorService((MentorRepository)repo);
 	}
 
 }

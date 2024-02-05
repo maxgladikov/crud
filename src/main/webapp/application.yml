@@ -7,6 +7,5 @@ profiles:
   test:
     username: max
     password: pas
-    url: jdbc:h2:mem:;INIT=RUNSCRIPT FROM 'classpath:scripts/init_script.sql';DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:scripts/init_script.sql';DB_CLOSE_DELAY=-1
     driver: org.h2.Driver
-

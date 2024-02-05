@@ -14,4 +14,16 @@ public class Student implements Entity{
 	private Sex sex;
 	private double academicPerformance;
 	private String contractNumber;
+	private long mentorId;
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+		
+		if (!(o instanceof Student))
+			return false;
+		Student obj=(Student)o;
+		return contractNumber.equals(obj.getContractNumber());
+	}
 }

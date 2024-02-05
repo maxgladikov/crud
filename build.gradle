@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies{
-	testImplementation 'com.h2database:h2:2.2.224'
+	testImplementation "org.mockito:mockito-junit-jupiter:$jUnitVersion"
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1'
 	implementation 'com.zaxxer:HikariCP:5.1.0'
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'
@@ -38,6 +38,12 @@ dependencies{
 }
 
 test.useJUnitPlatform()
+
+test {
+    testLogging.showStandardStreams = true
+    maxParallelForks =  Runtime.runtime.availableProcessors()
+}
+
 
 
 

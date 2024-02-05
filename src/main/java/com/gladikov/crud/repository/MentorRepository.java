@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.sql.DataSource;
 
+import com.gladikov.crud.exception.DaoException;
 import com.gladikov.crud.model.Mentor;
+import com.gladikov.crud.util.ResourceProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,38 +21,34 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class MentorRepository implements CrudRepository<Mentor> {
-	private final DataSource ds;
+	private final ResourceProvider ds;
 	@Override
-	public void add(Mentor entity) {
+	public void add(Mentor entity) throws DaoException {
 		String query = "INSERT INTO mentors (first_name, last_name, contract_number,salary) VALUES (?, ?, ?, ?)";
 		try (			
 				Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);
 			){
-			statement.setString(1, entity.getFirstName());
-			statement.setString(2, entity.getLastName());
-			statement.setString(3, entity.getContractNumber());
-			statement.setDouble(4, entity.getSalary());
-			statement.executeUpdate();
-			log.info("Entity {} {} created.", entity.getFirstName(), entity.getLastName());
-		} catch (SQLException e) {
-			log.error(e.getMessage());
+				statement.setString(1, entity.getFirstName());
+				statement.setString(2, entity.getLastName());
+				statement.setString(3, entity.getContractNumber());
+				statement.setDouble(4, entity.getSalary());
+				statement.executeUpdate();
+				log.info("Entity {} {} #{} created.", entity.getFirstName(), entity.getLastName(),entity.getContractNumber());
+		} catch(SQLException e) {
+			throw new DaoException(e);
 		}
 
 	}
 
 	@Override
-	public Optional<Mentor> getByContractNumber(String contractNumber) {
+	public Optional<Mentor> getByContractNumber(String contractNumber) throws DaoException {
 		String query = "SELECT	first_name, last_name, salary  FROM mentors WHERE contract_number=?";
 		Optional<Mentor> result = Optional.empty();
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		try {
-				connection = ds.getConnection();
-				statement = connection.prepareStatement(query);
-				statement.setString(1, contractNumber);
-				rs = statement.executeQuery();
+		try(Connection connection = ds.getConnection() ) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, contractNumber);
+			ResultSet rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				Mentor mentor=Mentor.builder().contractNumber(contractNumber).firstName(rs.getString("first_name"))
@@ -58,24 +56,17 @@ public class MentorRepository implements CrudRepository<Mentor> {
 				result=Optional.ofNullable(mentor);
 				log.info("Entity with {} succesfully found", contractNumber);
 			} else {
-				log.info("Entity with {} was not found", contractNumber);
+				log.info("Entity with #{} was not found", contractNumber);
+				throw new NoSuchElementException("Requested entity does not exist");
 			}
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		} finally {
-			try {
-				statement.close();
-				rs.close();
-				connection.close();
-			} catch (SQLException e) {
-				log.error(e.getMessage());
-			}
+		} catch(SQLException | NoSuchElementException e) {
+			throw new DaoException(e);
 		}
 		return result;
 	}
 
 	@Override
-	public void update(Mentor entity) {
+	public void update(Mentor entity) throws DaoException {
 		String query = "UPDATE	mentors SET first_name=?, last_name=?, salary=?  WHERE contract_number=?";
 		try (
 				Connection connection = ds.getConnection();
@@ -86,28 +77,28 @@ public class MentorRepository implements CrudRepository<Mentor> {
 					statement.setString(4, entity.getContractNumber());
 					int row = statement.executeUpdate();
 					log.info("{} entity updated",row);
-				} catch (SQLException e) {
-					log.error(e.getMessage());
-				}
+				}catch(SQLException e) {
+					throw new DaoException(e);
+				} 
 	}
 
 	@Override
-	public void delete(Mentor entiry) {
+	public void delete(String contractNumber) throws DaoException {
 		String query = "DELETE	FROM mentors WHERE contract_number=?";
 		try (
 				Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(query)
 			){
-			statement.setString(1, entiry.getContractNumber());
+			statement.setString(1, contractNumber);
 			int row = statement.executeUpdate();
-			log.info("Entity with contract #{} was deleted", entiry.getContractNumber());
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		}
+			log.info("Entity with contract #{} was deleted", contractNumber);
+		}catch(SQLException e) {
+			throw new DaoException(e);
+		} 
 	}
 
 	@Override
-	public List<Mentor> getAll() {
+	public List<Mentor> getAll() throws DaoException {
 		String query = "SELECT	first_name, last_name, salary, contract_number  FROM mentors";
 		List<Mentor> result = new LinkedList<>();
 		try (
@@ -125,9 +116,9 @@ public class MentorRepository implements CrudRepository<Mentor> {
 				result.add(mentor);
 			}
 			log.info("{} entities was read.", result.size());
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		}
+		} catch(SQLException e) {
+			throw new DaoException(e);
+		} 
 		return result;
 	}
 

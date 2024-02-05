@@ -20,9 +20,7 @@ public class AppContextListener implements ServletContextListener {
     	DataSource ds = null;
     	try {
 	    		rp = new ResourceProvider();
-		    	ds = rp.getDatasource();
 		    	ctx.setAttribute("ResourceProvider", rp);
-		    	ctx.setAttribute("DataSource", ds);
 		    	log.info("Datasource was initialized for Application.");
 		    	
 	    	} catch(Exception e) {

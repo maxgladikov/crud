@@ -9,79 +9,73 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.gladikov.crud.exception.DaoException;
 import com.gladikov.crud.model.Entity;
 
 abstract class CrudRepositoryTest<T extends Entity> {
-	private final CrudRepository<T> repository=getRepository();
-	private final T testEntityOne = getFirstEntity();
-	private final T testEntityTwo = getSecondEntity();
+	protected CrudRepository<T> repository;
+	private T givenEntity;
 	
 	@BeforeEach
-	void setUp(){
-		
+	void setUp() throws DaoException{
+		repository=getRepository();
+		givenEntity=getEntity();
 	}
 	
 	@Test
-	void givenEntity_whenProceedAdd_thenVerify() {
+	void givenEntity_whenProceedAdd_thenVerify() throws DaoException {
 		// given
-		String contractNum=testEntityOne.getContractNumber();
+		String contractNum=givenEntity.getContractNumber();
 		// when
-		repository.add(testEntityOne);
+		repository.add(givenEntity);
 		Optional<T> opt=repository.getByContractNumber(contractNum);
 		T result=opt.get();
 		// then
-		assertEquals(testEntityOne,result);
+		assertEquals(givenEntity,result);
 	}
 	
 	@Test
-	void givenRepository_whenProceedGetAll_thenVerify() {
+	void givenRepository_whenProceedGetAll_thenVerify() throws DaoException {
 		// given
-		repository.add(testEntityOne);
-		repository.add(testEntityTwo);
-		int expected=2;
+		repository.add(givenEntity);
+		int expected=getNumberOfElements();
 		// when
 		List<T> result=repository.getAll();
 		// then
-		assertAll(
-					() -> assertEquals(expected,result.size()),
-					() -> assertTrue(result.containsAll(List.of(testEntityOne,testEntityTwo)))
-				);
+		assertEquals(expected,result.size());
 	}
 	
 	@Test
-	void givenRepository_whenProceedDelete_thenVerify() {
+	void givenRepository_whenProceedDelete_thenVerify() throws DaoException {
 		// given
-		repository.add(testEntityOne);
-		repository.add(testEntityTwo);
+		repository.add(givenEntity);
 		// when
-		repository.delete(testEntityOne);
+		repository.delete(givenEntity.getContractNumber());
 		// then
-		assertFalse(repository.getAll().contains(testEntityOne));
+		assertFalse(repository.getAll().contains(givenEntity));
 	}
 	
 	@Test
-	void givenRepository_whenProceedUpdate_thenVerify() {
+	void givenRepository_whenProceedUpdate_thenVerify() throws DaoException {
 		// given
-		repository.add(testEntityOne);
-		repository.add(testEntityTwo);
-		testEntityOne.setFirstName("Changed");
+		repository.add(givenEntity);
+		givenEntity.setFirstName("Changed");
 		// when
-		repository.update(testEntityOne);
+		repository.update(givenEntity);
 		// then
-		assertEquals(testEntityOne ,repository.getByContractNumber(testEntityOne.getContractNumber()).get());
+		assertEquals(givenEntity ,repository.getByContractNumber(givenEntity.getContractNumber()).get());
 	}
 	
 	@AfterEach
-	void tearDown(){
-		repository.delete(testEntityOne);
-		repository.delete(testEntityTwo);
+	void tearDown() throws DaoException{
+		repository.delete(givenEntity.getContractNumber());
 	}
 	
 	
 	
 	
-	abstract T getFirstEntity();
-	abstract T getSecondEntity();
+	abstract T getEntity();
+	abstract int getNumberOfElements();
 	abstract CrudRepository<T> getRepository();
 		
 }
