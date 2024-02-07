@@ -25,6 +25,8 @@ import com.gladikov.crud.service.StudentService;
 @NoArgsConstructor
 public class StudentController extends CrudController<StudentDto>{
 
+	private static final long serialVersionUID = 3101794552976649468L;
+
 	StudentController(CrudService<StudentDto> service, ServletHandler<StudentDto> handler) {
 		super(service, handler);
 	}

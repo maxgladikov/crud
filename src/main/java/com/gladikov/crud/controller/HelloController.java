@@ -13,6 +13,8 @@ import com.gladikov.crud.dto.ErrorResponse;
 
 @WebServlet("/v1/api/university/hello/")
 public class HelloController extends HttpServlet {
+	private static final long serialVersionUID = 7925463475754627368L;
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();

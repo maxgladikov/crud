@@ -1,9 +1,6 @@
 package com.gladikov.crud.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
-import javax.sql.DataSource;
 
 import com.gladikov.crud.dto.StudentDto;
 import com.gladikov.crud.exception.DaoException;

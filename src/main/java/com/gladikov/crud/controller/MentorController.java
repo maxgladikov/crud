@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MentorController extends CrudController<MentorDto>{
 
+	private static final long serialVersionUID = 4233171821635389910L;
+
 	MentorController(CrudService<MentorDto> service,ServletHandler<MentorDto> handler){
 		super(service, handler);
 	}

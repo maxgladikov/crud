@@ -2,11 +2,9 @@ package com.gladikov.crud.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.gladikov.crud.exception.DaoException;
-import com.gladikov.crud.model.Mentor;
 import com.gladikov.crud.model.Sex;
 import com.gladikov.crud.model.Student;
 import com.gladikov.crud.util.ResourceProvider;
