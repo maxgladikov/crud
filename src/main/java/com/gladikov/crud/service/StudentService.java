@@ -10,6 +10,7 @@ import com.gladikov.crud.repository.CrudRepository;
 import com.gladikov.crud.repository.StudentRepository;
 import com.gladikov.crud.util.ResourceProvider;
 
+// Сервисы хорошие
 public class StudentService implements CrudService<StudentDto>{
 	private final CrudRepository<Student> repository;
 	

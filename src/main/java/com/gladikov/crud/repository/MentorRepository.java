@@ -18,6 +18,7 @@ import com.gladikov.crud.util.ResourceProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+// тут все очень хорошо, молодец, что прологировал все
 @Slf4j
 @RequiredArgsConstructor
 public class MentorRepository implements CrudRepository<Mentor> {
@@ -43,18 +44,19 @@ public class MentorRepository implements CrudRepository<Mentor> {
 
 	@Override
 	public Optional<Mentor> getByContractNumber(String contractNumber) throws DaoException {
-		String query = "SELECT	first_name, last_name, salary  FROM mentors WHERE contract_number=?";
-		Optional<Mentor> result = Optional.empty();
-		try(Connection connection = ds.getConnection() ) {
-			PreparedStatement statement = connection.prepareStatement(query);
+		String query = "SELECT	first_name, last_name, salary  FROM mentors WHERE contract_number=?"; // это лучше в константу
+		try (
+				Connection connection = ds.getConnection();
+				PreparedStatement statement = connection.prepareStatement(query)
+		) {
 			statement.setString(1, contractNumber);
 			ResultSet rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				Mentor mentor=Mentor.builder().contractNumber(contractNumber).firstName(rs.getString("first_name"))
 						.lastName(rs.getString("last_name")).salary(rs.getDouble("salary")).build();
-				result=Optional.ofNullable(mentor);
 				log.info("Entity with {} succesfully found", contractNumber);
+				return Optional.ofNullable(mentor);
 			} else {
 				log.info("Entity with #{} was not found", contractNumber);
 				throw new NoSuchElementException("Requested entity does not exist");
@@ -62,7 +64,6 @@ public class MentorRepository implements CrudRepository<Mentor> {
 		} catch(SQLException | NoSuchElementException e) {
 			throw new DaoException(e);
 		}
-		return result;
 	}
 
 	@Override
@@ -90,7 +91,7 @@ public class MentorRepository implements CrudRepository<Mentor> {
 				PreparedStatement statement = connection.prepareStatement(query)
 			){
 			statement.setString(1, contractNumber);
-			int row = statement.executeUpdate();
+			statement.executeUpdate();
 			log.info("Entity with contract #{} was deleted", contractNumber);
 		}catch(SQLException e) {
 			throw new DaoException(e);

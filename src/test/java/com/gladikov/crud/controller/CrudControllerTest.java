@@ -58,7 +58,7 @@ abstract class CrudControllerTest<T extends DTO> {
 	void givenServlet_whenProceedGetAll_thenVerify() throws IOException, ServletException, DaoException {
 		// given
 		when(request.getPathInfo()).thenReturn("/");
-		when(request.getParameterMap()).thenReturn(new HashMap<String,String[]>());
+		when(request.getParameterMap()).thenReturn(new HashMap<>());
 		when(response.getWriter()).thenReturn(writer);
 		when(service.get()).thenReturn(givenListOfDto());
 		String expected = givenListOfDtoJson();

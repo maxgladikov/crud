@@ -52,7 +52,7 @@ public class StudentController extends CrudController<StudentDto>{
 			} else
 				handler.handleBadRequest(response);
 		} else if (request.getPathInfo().equals("/mentor/")) {
-			if (params.size() == 1 && params.containsKey("mentor_id")) {
+			if (params.size() == 1 && params.containsKey("mentor_id")) { // все эти строки тоже в константы
 				handleGetByMentor(response,params.get("mentor_id")[0]);
 			} else 
 				handler.handleBadRequest(response);

@@ -14,7 +14,7 @@ public class Mentor implements Entity{
 	private String contractNumber;
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o) { // а почему хэшкод не переопределил?
 	    if (o == this)
 	        return true;
 	    if (!(o instanceof Mentor))

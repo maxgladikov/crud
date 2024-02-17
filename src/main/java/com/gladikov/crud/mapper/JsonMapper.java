@@ -11,7 +11,7 @@ public class JsonMapper {
 	private final static ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 	
 	public static String map(Object object) {
-		String result=null;
+		String result = null;
 		try {
 			result = ow.writeValueAsString(object);
 		} catch (JsonProcessingException e) {
