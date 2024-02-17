@@ -21,7 +21,7 @@ public class HelloController extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.setStatus(200);
-		String hello="Hello!";
+		String hello="Hello! + check";
 		out.print(new ErrorResponse(hello).json());
 		out.flush();
 	}
