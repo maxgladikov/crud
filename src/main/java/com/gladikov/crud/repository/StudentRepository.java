@@ -47,7 +47,7 @@ public class StudentRepository implements CrudRepository<Student> {
 	}
 
 	@Override
-	public Optional<Student> getByContractNumber(String contractNumber) throws DaoException {
+	public Optional<Student> getByContractNumber(String contractNumber) throws DaoException { // в этом репозитории небольшие замечания по стилю такие же как в MentorRepository, поэтому повторяться не буду
 		String query = """
 				SELECT	first_name, last_name, contract_number, age, sex, academic_performance, mentor_id  FROM students WHERE contract_number=?
 						""";
@@ -117,7 +117,7 @@ public class StudentRepository implements CrudRepository<Student> {
 				ResultSet rs = statement.executeQuery(query);
 			) {
 			while (rs.next()) {
-				Student student=Student.builder()
+				Student student=Student.builder() // вот за этот билд должен отвечать маппер. Туда отправляешь ResultSet и собираешь там Student. Ну либо RowMapper используешь
 						.contractNumber(rs.getString("contract_number"))
 						.firstName(rs.getString("first_name"))
 						.lastName(rs.getString("last_name"))

@@ -16,6 +16,8 @@ import com.gladikov.crud.service.CrudService;
 
 import lombok.extern.slf4j.Slf4j;
 
+// Очень хорошо, что вынес обработку в утилитарный класс
+// вообще, множно было бы статические методы сделать, обычно утилитарные методы статические
 @Slf4j
 public class ServletHandler <T extends DTO>{
 	private ObjectMapper mapper = new ObjectMapper();
